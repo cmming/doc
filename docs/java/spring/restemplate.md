@@ -88,12 +88,13 @@ public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
         try {
             // 统一设置请求头
             request.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-            // 方便查看返回体中的中文
-            log.info("远程调用请求url为:{},请求参数:{}", request.getURI(), new String(body, "UTF-8"));
+            logRequest(request, body);
             final StopWatch stopWatch = new StopWatch();
             stopWatch.start();
             ClientHttpResponse response = execution.execute(request, body);
+            String contentType = request.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
             String resultStr = responseHandle(response);
+            logResponse(response);
             stopWatch.stop();
             log.info("远程调用请求url为:{},响应结果:{},耗时:{}ms", request.getURI(), resultStr, stopWatch.getTotalTimeMillis());
             return response;
@@ -102,6 +103,50 @@ public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
             throw new DemoException(ResultEnum.SERVER_COMMUNICATION_ERR0R);
         }
     }
+
+    /**
+     * 打印请求日志 .
+     *
+     * @param request 请求体
+     * @param body    body
+     * @throws IOException 异常
+     */
+    private void logRequest(HttpRequest request, byte[] body) throws IOException {
+        log.info("===========================request begin================================================");
+        log.info("URI         : " + request.getURI());
+        log.info("Method      : " + request.getMethod());
+        log.info("Headers     : " + request.getHeaders());
+
+        // Log query parameters for GET requests
+        if (HttpMethod.GET.equals(request.getMethod())) {
+            log.info("Query Params: " + getQueryParameters(request));
+        } else {
+            log.info("Request body: " + new String(body, StandardCharsets.UTF_8));
+        }
+
+        log.info("==========================request end================================================");
+    }
+
+    private String getQueryParameters(HttpRequest request) {
+        return UriComponentsBuilder.fromUri(request.getURI()).build().getQueryParams().toString();
+    }
+
+    /**
+     * 打印响应日志 .
+     *
+     * @param response 响应
+     * @throws IOException 异常
+     */
+    private void logResponse(ClientHttpResponse response) throws IOException {
+        log.info("============================response begin==========================================");
+        log.info("Status code  : " + response.getStatusCode());
+        log.info("Status text  : " + response.getStatusText());
+        log.info("Headers      : " + response.getHeaders());
+        log.info("Response body: " + StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8));
+        log.info("=======================response end=================================================");
+    }
+
+
 
     /**
      * 响应处理，非正常的结果统一抛出异常 .
@@ -198,12 +243,39 @@ public class MyResponseErrorHandler extends DefaultResponseErrorHandler {
 @Value("${remote.url:http://localhost:5000}")
 private String url;
 
+/**
+ * 忽略https证书
+ * 
+ */
+public BufferingClientHttpRequestFactory generateHttpRequestFactory() throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
+    SSLContext sslContext = SSLContextBuilder
+            .create()
+            .loadTrustMaterial(null, (x509Certificates, s) -> true)
+            .build();
+
+    SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
+
+    CloseableHttpClient httpClient = HttpClients.custom()
+            .setSSLSocketFactory(csf)
+            .build();
+
+    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+    requestFactory.setHttpClient(httpClient);
+
+    // 设置默认超时时间
+    requestFactory.setConnectTimeout(nwAuditConfig.getReadTimeout());
+    requestFactory.setReadTimeout(nwAuditConfig.getConnectTimeout());
+
+    return new BufferingClientHttpRequestFactory(requestFactory);
+}
+
 @Bean(value = "remoteClient", name = "remoteClient")
 public RestTemplate restTemplate() {
     // 避免读取一次后，数据就被清空，导致多次读取报错；设置默认超时时间
-    BufferingClientHttpRequestFactory simpleBufferingClientHttpRequest =
-            new BufferingClientHttpRequestFactory(simpleClientHttpRequestFactory());
-    final RestTemplate restTemplate = new RestTemplate(simpleBufferingClientHttpRequest);
+    // BufferingClientHttpRequestFactory simpleBufferingClientHttpRequest =
+    //         new BufferingClientHttpRequestFactory(simpleClientHttpRequestFactory());
+    // final RestTemplate restTemplate = new RestTemplate(simpleBufferingClientHttpRequest);
+    RestTemplate restTemplate = new RestTemplate(generateHttpRequestFactory());
     //  设置请求前缀
     restTemplate.setUriTemplateHandler(new DefaultUriBuilderFactory(url));
     // 设置拦截器
@@ -245,3 +317,7 @@ public void test() {
 
 
 
+docker run -d --name=gitea -p 33000:3000 -p 322:22 \
+  -v /srv/gitea:/data \
+  --restart always \
+  gitea/gitea:latest

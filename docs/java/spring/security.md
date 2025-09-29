@@ -48,3 +48,17 @@ Spring Security 是一个功能强大且高度可定制的**身份验证**和**�
 ### 4. 多用户体系
 
 
+
+
+http://<auth-server-host>:<auth-server-port>/oauth/authorize?response_type=code&client_id=<client-id>&redirect_uri=<redirect-uri>&scope=<scope>
+
+http://localhost:9090/oauth/authorize?response_type=code&client_id=admin&redirect_uri=https://www.baidu.com/&scope=all
+
+http://localhost:9090/oauth/authorize?response_type=token&client_id=admin&client_secret=123123
+
+/oauth/authorize?response_type=code&client_id=admin
+
+
+
+
+
