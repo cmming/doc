@@ -35,4 +35,29 @@ net.bridge.bridge-nf-call-iptables=1
 ```
 
 
+### docker网络代理
 
+```bash
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf <<EOF
+[Service]
+Environment="HTTP_PROXY=http://192.168.0.159:7890"
+Environment="HTTPS_PROXY=http://192.168.0.159:7890"
+Environment="NO_PROXY=localhost,127.0.0.1,::1,.local,.lan,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+### 系统网络代理
+
+```bash
+# 或者 /etc/environment
+vi /etc/profile
+# 添加如下内容
+export http_proxy=http://192.168.0.159:7890
+export https_proxy=http://192.168.0.159:7890
+export no_proxy=localhost,127.0.0.1,::1,.local,.lan,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+# 使配置生效
+source /etc/profile
+```

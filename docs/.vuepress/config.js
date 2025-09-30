@@ -249,6 +249,8 @@ function getBlogSidebar(type) {
                     title: '常见问题',
                     children: [
                         ['./private/data', '数据类型问题'],
+                        ['./private/async', 'pdf异步加载'],
+
                     ]
                 },
                 {
@@ -265,8 +267,11 @@ function getBlogSidebar(type) {
                 {
                     title: 'docker',
                     children: [
+                        ['./docker/install', '安装'],
                         ['./docker/image', '镜像'],
+                        ['./docker/build', '构建'],
                         ['./docker/container', '容器'],
+                        ['./docker/docker-compse', 'docker-compse'],
                     ]
                 },
                 {
