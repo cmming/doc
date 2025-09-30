@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Docker 镜像构建最佳实践指南 | chmi</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/doc/assets/css/0.styles.3e4528e6.css" as="style"><link rel="preload" href="/doc/assets/js/app.e9791119.js" as="script"><link rel="preload" href="/doc/assets/js/2.9984ddc4.js" as="script"><link rel="preload" href="/doc/assets/js/1.4894c54a.js" as="script"><link rel="preload" href="/doc/assets/js/35.6f3c3b87.js" as="script"><link rel="prefetch" href="/doc/assets/js/10.e64cabaf.js"><link rel="prefetch" href="/doc/assets/js/100.f7df002f.js"><link rel="prefetch" href="/doc/assets/js/101.d35576e4.js"><link rel="prefetch" href="/doc/assets/js/102.801bff79.js"><link rel="prefetch" href="/doc/assets/js/103.44a105d7.js"><link rel="prefetch" href="/doc/assets/js/104.7a11ad78.js"><link rel="prefetch" href="/doc/assets/js/105.ebf158b8.js"><link rel="prefetch" href="/doc/assets/js/106.62acc15b.js"><link rel="prefetch" href="/doc/assets/js/107.0335ac6e.js"><link rel="prefetch" href="/doc/assets/js/108.3df13500.js"><link rel="prefetch" href="/doc/assets/js/109.9d9dedbd.js"><link rel="prefetch" href="/doc/assets/js/11.97d1d428.js"><link rel="prefetch" href="/doc/assets/js/110.8c458b9e.js"><link rel="prefetch" href="/doc/assets/js/111.0cdddd42.js"><link rel="prefetch" href="/doc/assets/js/112.9602eae4.js"><link rel="prefetch" href="/doc/assets/js/113.24ae0da3.js"><link rel="prefetch" href="/doc/assets/js/114.055e4bfa.js"><link rel="prefetch" href="/doc/assets/js/115.bf42c7ce.js"><link rel="prefetch" href="/doc/assets/js/116.02e76485.js"><link rel="prefetch" href="/doc/assets/js/117.02d5349d.js"><link rel="prefetch" href="/doc/assets/js/118.2395b64f.js"><link rel="prefetch" href="/doc/assets/js/119.4647eaef.js"><link rel="prefetch" href="/doc/assets/js/12.429a7849.js"><link rel="prefetch" href="/doc/assets/js/120.29fec0a3.js"><link rel="prefetch" href="/doc/assets/js/121.70dc5297.js"><link rel="prefetch" href="/doc/assets/js/122.e36f561a.js"><link rel="prefetch" href="/doc/assets/js/123.b45c65f5.js"><link rel="prefetch" href="/doc/assets/js/124.61b24212.js"><link rel="prefetch" href="/doc/assets/js/125.a505e805.js"><link rel="prefetch" href="/doc/assets/js/126.2508f0ff.js"><link rel="prefetch" href="/doc/assets/js/127.baccc550.js"><link rel="prefetch" href="/doc/assets/js/128.5a904dd4.js"><link rel="prefetch" href="/doc/assets/js/129.421b6144.js"><link rel="prefetch" href="/doc/assets/js/13.d2ddedb0.js"><link rel="prefetch" href="/doc/assets/js/130.2f9875bb.js"><link rel="prefetch" href="/doc/assets/js/131.d6fe8bf3.js"><link rel="prefetch" href="/doc/assets/js/132.712f1ccd.js"><link rel="prefetch" href="/doc/assets/js/133.33245ee7.js"><link rel="prefetch" href="/doc/assets/js/134.6e4c639e.js"><link rel="prefetch" href="/doc/assets/js/135.abc73593.js"><link rel="prefetch" href="/doc/assets/js/136.a06a5898.js"><link rel="prefetch" href="/doc/assets/js/137.34fda939.js"><link rel="prefetch" href="/doc/assets/js/138.80872e22.js"><link rel="prefetch" href="/doc/assets/js/139.9a017865.js"><link rel="prefetch" href="/doc/assets/js/14.eced5267.js"><link rel="prefetch" href="/doc/assets/js/140.6dce18ab.js"><link rel="prefetch" href="/doc/assets/js/141.0dadea22.js"><link rel="prefetch" href="/doc/assets/js/142.9b1ab459.js"><link rel="prefetch" href="/doc/assets/js/143.2df61c45.js"><link rel="prefetch" href="/doc/assets/js/144.b04800d9.js"><link rel="prefetch" href="/doc/assets/js/145.391ba188.js"><link rel="prefetch" href="/doc/assets/js/146.933c96fd.js"><link rel="prefetch" href="/doc/assets/js/147.26cba66b.js"><link rel="prefetch" href="/doc/assets/js/148.01184dfd.js"><link rel="prefetch" href="/doc/assets/js/149.f4c2a9e1.js"><link rel="prefetch" href="/doc/assets/js/15.f503cdfb.js"><link rel="prefetch" href="/doc/assets/js/150.832f6f9f.js"><link rel="prefetch" href="/doc/assets/js/151.017b44f5.js"><link rel="prefetch" href="/doc/assets/js/152.e6e6f3f6.js"><link rel="prefetch" href="/doc/assets/js/153.ea9d07bc.js"><link rel="prefetch" href="/doc/assets/js/154.893c9f9e.js"><link rel="prefetch" href="/doc/assets/js/155.1822ff2a.js"><link rel="prefetch" href="/doc/assets/js/156.6be558d2.js"><link rel="prefetch" href="/doc/assets/js/157.9c36adf5.js"><link rel="prefetch" href="/doc/assets/js/158.fcc0f267.js"><link rel="prefetch" href="/doc/assets/js/159.eb6c07ff.js"><link rel="prefetch" href="/doc/assets/js/16.92b4b017.js"><link rel="prefetch" href="/doc/assets/js/160.64684e90.js"><link rel="prefetch" href="/doc/assets/js/161.1c019da5.js"><link rel="prefetch" href="/doc/assets/js/162.674fd786.js"><link rel="prefetch" href="/doc/assets/js/163.1f253589.js"><link rel="prefetch" href="/doc/assets/js/164.1c5cda57.js"><link rel="prefetch" href="/doc/assets/js/165.be57e069.js"><link rel="prefetch" href="/doc/assets/js/166.bc4dc3f8.js"><link rel="prefetch" href="/doc/assets/js/167.688a017b.js"><link rel="prefetch" href="/doc/assets/js/168.d0a54547.js"><link rel="prefetch" href="/doc/assets/js/169.d0d8503e.js"><link rel="prefetch" href="/doc/assets/js/17.9b14dbb8.js"><link rel="prefetch" href="/doc/assets/js/170.f9244417.js"><link rel="prefetch" href="/doc/assets/js/171.5dcb807c.js"><link rel="prefetch" href="/doc/assets/js/172.ef7c0100.js"><link rel="prefetch" href="/doc/assets/js/173.ee5fd627.js"><link rel="prefetch" href="/doc/assets/js/174.e98b1e68.js"><link rel="prefetch" href="/doc/assets/js/175.5f3463ee.js"><link rel="prefetch" href="/doc/assets/js/176.c17ff6a1.js"><link rel="prefetch" href="/doc/assets/js/177.73b84e6c.js"><link rel="prefetch" href="/doc/assets/js/178.3515685e.js"><link rel="prefetch" href="/doc/assets/js/179.ed97923f.js"><link rel="prefetch" href="/doc/assets/js/18.9ecfa5ea.js"><link rel="prefetch" href="/doc/assets/js/180.56c4cba3.js"><link rel="prefetch" href="/doc/assets/js/181.fb570576.js"><link rel="prefetch" href="/doc/assets/js/182.a0778325.js"><link rel="prefetch" href="/doc/assets/js/183.d45f33e0.js"><link rel="prefetch" href="/doc/assets/js/184.6c9f0d19.js"><link rel="prefetch" href="/doc/assets/js/185.46aa9f24.js"><link rel="prefetch" href="/doc/assets/js/186.6b23d3de.js"><link rel="prefetch" href="/doc/assets/js/187.95b78b10.js"><link rel="prefetch" href="/doc/assets/js/188.cbffaf1d.js"><link rel="prefetch" href="/doc/assets/js/189.a9c763ae.js"><link rel="prefetch" href="/doc/assets/js/19.512bc5e6.js"><link rel="prefetch" href="/doc/assets/js/190.c924cddf.js"><link rel="prefetch" href="/doc/assets/js/191.b0c6ef94.js"><link rel="prefetch" href="/doc/assets/js/192.16a7804e.js"><link rel="prefetch" href="/doc/assets/js/20.23e9d6c2.js"><link rel="prefetch" href="/doc/assets/js/21.d0f56493.js"><link rel="prefetch" href="/doc/assets/js/22.638e0da8.js"><link rel="prefetch" href="/doc/assets/js/23.048edccb.js"><link rel="prefetch" href="/doc/assets/js/24.7a953c6e.js"><link rel="prefetch" href="/doc/assets/js/25.7c48d1d9.js"><link rel="prefetch" href="/doc/assets/js/26.eab10eb6.js"><link rel="prefetch" href="/doc/assets/js/27.7ae1e23b.js"><link rel="prefetch" href="/doc/assets/js/28.1019e235.js"><link rel="prefetch" href="/doc/assets/js/29.fdcac620.js"><link rel="prefetch" href="/doc/assets/js/3.d3d16269.js"><link rel="prefetch" href="/doc/assets/js/30.9fed9a41.js"><link rel="prefetch" href="/doc/assets/js/31.95761f7a.js"><link rel="prefetch" href="/doc/assets/js/32.0cb8f8e8.js"><link rel="prefetch" href="/doc/assets/js/33.82a5b3e4.js"><link rel="prefetch" href="/doc/assets/js/34.6c3770b1.js"><link rel="prefetch" href="/doc/assets/js/36.88ac4c17.js"><link rel="prefetch" href="/doc/assets/js/37.ff59f6bc.js"><link rel="prefetch" href="/doc/assets/js/38.37f4cfaf.js"><link rel="prefetch" href="/doc/assets/js/39.28ef1e84.js"><link rel="prefetch" href="/doc/assets/js/4.a9eea2ab.js"><link rel="prefetch" href="/doc/assets/js/40.810dd8fd.js"><link rel="prefetch" href="/doc/assets/js/41.dec6c4db.js"><link rel="prefetch" href="/doc/assets/js/42.7fea9c4d.js"><link rel="prefetch" href="/doc/assets/js/43.a3007ecb.js"><link rel="prefetch" href="/doc/assets/js/44.c3916cf4.js"><link rel="prefetch" href="/doc/assets/js/45.9478de0c.js"><link rel="prefetch" href="/doc/assets/js/46.b268330b.js"><link rel="prefetch" href="/doc/assets/js/47.a3df4f01.js"><link rel="prefetch" href="/doc/assets/js/48.fe6ed53c.js"><link rel="prefetch" href="/doc/assets/js/49.7dcbd61a.js"><link rel="prefetch" href="/doc/assets/js/5.575f1112.js"><link rel="prefetch" href="/doc/assets/js/50.be9bb540.js"><link rel="prefetch" href="/doc/assets/js/51.fef7c14e.js"><link rel="prefetch" href="/doc/assets/js/52.159a83df.js"><link rel="prefetch" href="/doc/assets/js/53.e330ed7c.js"><link rel="prefetch" href="/doc/assets/js/54.dfc96984.js"><link rel="prefetch" href="/doc/assets/js/55.2d8d1eda.js"><link rel="prefetch" href="/doc/assets/js/56.768b335d.js"><link rel="prefetch" href="/doc/assets/js/57.961f4c80.js"><link rel="prefetch" href="/doc/assets/js/58.35f2f06d.js"><link rel="prefetch" href="/doc/assets/js/59.3bb0d20b.js"><link rel="prefetch" href="/doc/assets/js/6.4af81870.js"><link rel="prefetch" href="/doc/assets/js/60.7c61912f.js"><link rel="prefetch" href="/doc/assets/js/61.a18cb931.js"><link rel="prefetch" href="/doc/assets/js/62.ff800f97.js"><link rel="prefetch" href="/doc/assets/js/63.7135e337.js"><link rel="prefetch" href="/doc/assets/js/64.aab6d9da.js"><link rel="prefetch" href="/doc/assets/js/65.c5073b64.js"><link rel="prefetch" href="/doc/assets/js/66.5201f0e4.js"><link rel="prefetch" href="/doc/assets/js/67.489b7a5b.js"><link rel="prefetch" href="/doc/assets/js/68.d70ed0ca.js"><link rel="prefetch" href="/doc/assets/js/69.c8dfddef.js"><link rel="prefetch" href="/doc/assets/js/7.4729ec1c.js"><link rel="prefetch" href="/doc/assets/js/70.986e6289.js"><link rel="prefetch" href="/doc/assets/js/71.af473d5f.js"><link rel="prefetch" href="/doc/assets/js/72.0861cb4f.js"><link rel="prefetch" href="/doc/assets/js/73.e71927d6.js"><link rel="prefetch" href="/doc/assets/js/74.2d511199.js"><link rel="prefetch" href="/doc/assets/js/75.613a2e64.js"><link rel="prefetch" href="/doc/assets/js/76.761661f3.js"><link rel="prefetch" href="/doc/assets/js/77.6e250273.js"><link rel="prefetch" href="/doc/assets/js/78.d1030cc4.js"><link rel="prefetch" href="/doc/assets/js/79.e0a21bff.js"><link rel="prefetch" href="/doc/assets/js/80.de7ad888.js"><link rel="prefetch" href="/doc/assets/js/81.7bcaffe6.js"><link rel="prefetch" href="/doc/assets/js/82.3e33a142.js"><link rel="prefetch" href="/doc/assets/js/83.df6d5dd9.js"><link rel="prefetch" href="/doc/assets/js/84.87ca7056.js"><link rel="prefetch" href="/doc/assets/js/85.9f81bfb0.js"><link rel="prefetch" href="/doc/assets/js/86.8eee4710.js"><link rel="prefetch" href="/doc/assets/js/87.b9d04c8d.js"><link rel="prefetch" href="/doc/assets/js/88.be60c2b5.js"><link rel="prefetch" href="/doc/assets/js/89.98a77c20.js"><link rel="prefetch" href="/doc/assets/js/90.76253f05.js"><link rel="prefetch" href="/doc/assets/js/91.a0862ac7.js"><link rel="prefetch" href="/doc/assets/js/92.ce7afd75.js"><link rel="prefetch" href="/doc/assets/js/93.33356253.js"><link rel="prefetch" href="/doc/assets/js/94.875516e1.js"><link rel="prefetch" href="/doc/assets/js/95.3f5ed008.js"><link rel="prefetch" href="/doc/assets/js/96.ac1d4d27.js"><link rel="prefetch" href="/doc/assets/js/97.e4acbe31.js"><link rel="prefetch" href="/doc/assets/js/98.b6b8e26b.js"><link rel="prefetch" href="/doc/assets/js/99.7827bebe.js"><link rel="prefetch" href="/doc/assets/js/vendors~docsearch.82899547.js">
+    <link rel="stylesheet" href="/doc/assets/css/0.styles.3e4528e6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/doc/" class="home-link router-link-active"><!----> <span class="site-name">chmi</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博客" class="dropdown-title"><span class="title">博客</span> <span class="arrow down"></span></button> <button type="button" aria-label="博客" class="mobile-dropdown-title"><span class="title">博客</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/doc/frontEnd/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/doc/typescript/chapter1/" class="nav-link">
+  typescript
+</a></li><li class="dropdown-item"><!----> <a href="/doc/java/" class="nav-link">
+  java
+</a></li><li class="dropdown-item"><!----> <a href="/doc/backEnd/php/" class="nav-link">
+  php
+</a></li><li class="dropdown-item"><!----> <a href="/doc/backEnd/linux/" class="nav-link router-link-active">
+  linux
+</a></li></ul></div></div><div class="nav-item"><a href="/doc/algorithm/" class="nav-link">
+  算法
+</a></div><div class="nav-item"><a href="/doc/thought/" class="nav-link">
+  随笔
+</a></div><div class="nav-item"><a href="/doc/reading/" class="nav-link">
+  读书
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博客" class="dropdown-title"><span class="title">博客</span> <span class="arrow down"></span></button> <button type="button" aria-label="博客" class="mobile-dropdown-title"><span class="title">博客</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/doc/frontEnd/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/doc/typescript/chapter1/" class="nav-link">
+  typescript
+</a></li><li class="dropdown-item"><!----> <a href="/doc/java/" class="nav-link">
+  java
+</a></li><li class="dropdown-item"><!----> <a href="/doc/backEnd/php/" class="nav-link">
+  php
+</a></li><li class="dropdown-item"><!----> <a href="/doc/backEnd/linux/" class="nav-link router-link-active">
+  linux
+</a></li></ul></div></div><div class="nav-item"><a href="/doc/algorithm/" class="nav-link">
+  算法
+</a></div><div class="nav-item"><a href="/doc/thought/" class="nav-link">
+  随笔
+</a></div><div class="nav-item"><a href="/doc/reading/" class="nav-link">
+  读书
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>docker</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/doc/backEnd/linux/docker/install.html" class="sidebar-link">安装</a></li><li><a href="/doc/backEnd/linux/docker/image.html" class="sidebar-link">镜像</a></li><li><a href="/doc/backEnd/linux/docker/build.html" aria-current="page" class="active sidebar-link">构建</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#目录" class="sidebar-link">目录</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#多平台构建" class="sidebar-link">多平台构建</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_1-启用-docker-buildx" class="sidebar-link">1. 启用 Docker Buildx</a></li></ul></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#dockerfile-优化示例" class="sidebar-link">Dockerfile 优化示例</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_2-1-基础镜像和构建参数" class="sidebar-link">2.1 基础镜像和构建参数</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_2-2-包管理器优化" class="sidebar-link">2.2 包管理器优化</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_2-3-依赖安装和清理" class="sidebar-link">2.3 依赖安装和清理</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_2-4-环境变量配置" class="sidebar-link">2.4 环境变量配置</a></li></ul></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#构建和发布" class="sidebar-link">构建和发布</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_3-1-构建多平台镜像并推送" class="sidebar-link">3.1 构建多平台镜像并推送</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_3-2-构建单平台镜像-离线部署" class="sidebar-link">3.2 构建单平台镜像（离线部署）</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_3-3-导入离线镜像" class="sidebar-link">3.3 导入离线镜像</a></li></ul></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#运行和测试" class="sidebar-link">运行和测试</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_4-1-功能测试" class="sidebar-link">4.1 功能测试</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_4-2-交互式调试" class="sidebar-link">4.2 交互式调试</a></li></ul></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#故障排除" class="sidebar-link">故障排除</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_5-1-常见问题" class="sidebar-link">5.1 常见问题</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_5-2-调试命令" class="sidebar-link">5.2 调试命令</a></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#_5-3-性能优化建议" class="sidebar-link">5.3 性能优化建议</a></li></ul></li><li class="sidebar-sub-header"><a href="/doc/backEnd/linux/docker/build.html#相关资源" class="sidebar-link">相关资源</a></li></ul></li><li><a href="/doc/backEnd/linux/docker/container.html" class="sidebar-link">容器</a></li><li><a href="/doc/backEnd/linux/docker/docker-compse.html" class="sidebar-link">docker-compse</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>k8s</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>harbor</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="docker-镜像构建最佳实践指南"><a href="#docker-镜像构建最佳实践指南" class="header-anchor">#</a> Docker 镜像构建最佳实践指南</h1> <p>本文档介绍了 Docker 镜像构建的最佳实践，重点关注多平台构建和镜像优化技术。</p> <h2 id="目录"><a href="#目录" class="header-anchor">#</a> 目录</h2> <ul><li><a href="#%E5%A4%9A%E5%B9%B3%E5%8F%B0%E6%9E%84%E5%BB%BA">多平台构建</a></li> <li><a href="#dockerfile-%E4%BC%98%E5%8C%96%E7%A4%BA%E4%BE%8B">Dockerfile 优化示例</a></li> <li><a href="#%E6%9E%84%E5%BB%BA%E5%92%8C%E5%8F%91%E5%B8%83">构建和发布</a></li> <li><a href="#%E8%BF%90%E8%A1%8C%E5%92%8C%E6%B5%8B%E8%AF%95">运行和测试</a></li> <li><a href="#%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4">故障排除</a></li></ul> <h2 id="多平台构建"><a href="#多平台构建" class="header-anchor">#</a> 多平台构建</h2> <h3 id="_1-启用-docker-buildx"><a href="#_1-启用-docker-buildx" class="header-anchor">#</a> 1. 启用 Docker Buildx</h3> <p>Docker Buildx 是 Docker 的扩展构建功能，支持多平台镜像构建。</p> <h4 id="_1-1-准备工作"><a href="#_1-1-准备工作" class="header-anchor">#</a> 1.1 准备工作</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 启用多架构支持（需要特权模式）</span>
+<span class="token function">docker</span> run <span class="token parameter variable">--privileged</span> <span class="token parameter variable">--rm</span> tonistiigi/binfmt <span class="token parameter variable">--install</span> all
+</code></pre></div><h4 id="_1-2-创建构建器实例"><a href="#_1-2-创建构建器实例" class="header-anchor">#</a> 1.2 创建构建器实例</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 创建并使用新的构建器实例（支持代理配置）</span>
+<span class="token function">docker</span> buildx create <span class="token punctuation">\</span>
+  <span class="token parameter variable">--name</span> devbuilder <span class="token punctuation">\</span>
+  <span class="token parameter variable">--driver</span> docker-container <span class="token punctuation">\</span>
+  --driver-opt <span class="token assign-left variable">env.http_proxy</span><span class="token operator">=</span>http://192.168.0.159:7890 <span class="token punctuation">\</span>
+  --driver-opt <span class="token assign-left variable">env.https_proxy</span><span class="token operator">=</span>http://192.168.0.159:7890 <span class="token punctuation">\</span>
+  <span class="token parameter variable">--use</span>
+</code></pre></div><h4 id="_1-3-验证构建器"><a href="#_1-3-验证构建器" class="header-anchor">#</a> 1.3 验证构建器</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 启动构建器并检查配置</span>
+<span class="token function">docker</span> buildx inspect <span class="token parameter variable">--bootstrap</span>
+
+<span class="token comment"># 验证支持的平台</span>
+<span class="token function">docker</span> buildx <span class="token function">ls</span>
+</code></pre></div><h2 id="dockerfile-优化示例"><a href="#dockerfile-优化示例" class="header-anchor">#</a> Dockerfile 优化示例</h2> <p>以下 Dockerfile 展示了多平台构建的最佳实践，包括镜像大小优化、多阶段构建参数使用等。</p> <h3 id="_2-1-基础镜像和构建参数"><a href="#_2-1-基础镜像和构建参数" class="header-anchor">#</a> 2.1 基础镜像和构建参数</h3> <div class="language-dockerfile extra-class"><pre class="language-dockerfile"><code><span class="token instruction"><span class="token keyword">FROM</span> almalinux:8</span>
+
+<span class="token comment"># 多平台构建参数（必须在每个阶段内声明）</span>
+<span class="token instruction"><span class="token keyword">ARG</span> TARGETPLATFORM</span>
+<span class="token instruction"><span class="token keyword">ARG</span> TARGETARCH</span>
+<span class="token instruction"><span class="token keyword">ARG</span> BUILDPLATFORM</span>
+
+<span class="token comment"># 显示构建信息（便于调试）</span>
+<span class="token instruction"><span class="token keyword">RUN</span> set -ex; <span class="token operator">\</span>
+    echo <span class="token string">&quot;Building on: ${BUILDPLATFORM:-unknown}&quot;</span>; <span class="token operator">\</span>
+    echo <span class="token string">&quot;Target platform: ${TARGETPLATFORM:-unknown}/${TARGETARCH:-unknown}&quot;</span>; <span class="token operator">\</span>
+    echo <span class="token string">&quot;Architecture: $(uname -m)&quot;</span></span>
+</code></pre></div><h3 id="_2-2-包管理器优化"><a href="#_2-2-包管理器优化" class="header-anchor">#</a> 2.2 包管理器优化</h3> <div class="language-dockerfile extra-class"><pre class="language-dockerfile"><code><span class="token comment"># DNF 配置优化：提升下载速度，减少镜像大小</span>
+<span class="token instruction"><span class="token keyword">RUN</span> set -eux; <span class="token operator">\</span>
+    echo -e <span class="token string">&quot;fastestmirror=True\nmax_parallel_downloads=10\ntsflags=nodocs\ninstall_weak_deps=False&quot;</span> &gt;&gt; /etc/dnf/dnf.conf; <span class="token operator">\</span>
+    dnf -y install dnf-plugins-core epel-release; <span class="token operator">\</span>
+    <span class="token comment"># 启用 PowerTools 仓库（某些包依赖）</span>
+    dnf config-manager --set-enabled powertools || true; <span class="token operator">\</span>
+    dnf -y update;</span>
+</code></pre></div><h3 id="_2-3-依赖安装和清理"><a href="#_2-3-依赖安装和清理" class="header-anchor">#</a> 2.3 依赖安装和清理</h3> <div class="language-dockerfile extra-class"><pre class="language-dockerfile"><code><span class="token comment"># 分层安装：基础工具</span>
+<span class="token instruction"><span class="token keyword">RUN</span> dnf -y install --setopt=tsflags=nodocs <span class="token operator">\</span>
+        curl wget tar ca-certificates fontconfig; <span class="token operator">\</span>
+    <span class="token comment"># Java 运行环境</span>
+    dnf -y install --setopt=tsflags=nodocs <span class="token operator">\</span>
+        java-1.8.0-openjdk java-1.8.0-openjdk-devel; <span class="token operator">\</span>
+    <span class="token comment"># LibreOffice 办公套件（无头模式）</span>
+    dnf -y install --setopt=tsflags=nodocs <span class="token operator">\</span>
+        libreoffice-headless libreoffice-writer; <span class="token operator">\</span>
+    <span class="token comment"># 语言包</span>
+    dnf -y install --setopt=tsflags=nodocs <span class="token operator">\</span>
+        glibc-langpack-zh glibc-langpack-en;</span>
+
+<span class="token comment"># 字体安装（支持中日韩文字显示）</span>
+<span class="token instruction"><span class="token keyword">RUN</span> dnf -y install --setopt=tsflags=nodocs <span class="token operator">\</span>
+        dejavu-fonts-common dejavu-sans-fonts dejavu-serif-fonts dejavu-sans-mono-fonts <span class="token operator">\</span>
+        google-noto-sans-cjk-ttc-fonts google-noto-serif-cjk-ttc-fonts <span class="token operator">\</span>
+        wqy-microhei-fonts || true; <span class="token operator">\</span>
+    <span class="token comment"># 可选字体（可能在某些仓库中不可用）</span>
+    dnf -y install --setopt=tsflags=nodocs wqy-zenhei-fonts || <span class="token operator">\</span>
+        echo <span class="token string">&quot;wqy-zenhei-fonts not found, skipping&quot;</span>; <span class="token operator">\</span>
+    <span class="token comment"># 刷新字体缓存</span>
+    fc-cache -fv; <span class="token operator">\</span>
+    <span class="token comment"># 验证安装</span>
+    java -version; <span class="token operator">\</span>
+    libreoffice --version || true; <span class="token operator">\</span>
+    <span class="token comment"># 清理缓存</span>
+    dnf clean all; <span class="token operator">\</span>
+    rm -rf /var/cache/dnf/* /tmp/* /var/tmp/*</span>
+</code></pre></div><h3 id="_2-4-环境变量配置"><a href="#_2-4-环境变量配置" class="header-anchor">#</a> 2.4 环境变量配置</h3> <div class="language-dockerfile extra-class"><pre class="language-dockerfile"><code><span class="token comment"># 语言环境和 Java 路径</span>
+<span class="token instruction"><span class="token keyword">ENV</span> LANG=zh_CN.UTF-8 <span class="token operator">\</span>
+    LC_ALL=zh_CN.UTF-8 <span class="token operator">\</span>
+    LANGUAGE=zh_CN:zh <span class="token operator">\</span>
+    LC_CTYPE=zh_CN.UTF-8 <span class="token operator">\</span>
+    JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk</span>
+
+<span class="token instruction"><span class="token keyword">ENV</span> PATH=<span class="token string">&quot;$JAVA_HOME/bin:${PATH}&quot;</span></span>
+</code></pre></div><h2 id="构建和发布"><a href="#构建和发布" class="header-anchor">#</a> 构建和发布</h2> <h3 id="_3-1-构建多平台镜像并推送"><a href="#_3-1-构建多平台镜像并推送" class="header-anchor">#</a> 3.1 构建多平台镜像并推送</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 同时构建 AMD64 和 ARM64 架构，并推送到 Docker Hub</span>
+<span class="token function">docker</span> buildx build <span class="token punctuation">\</span>
+    <span class="token parameter variable">--file</span> Dockerfile.cm <span class="token punctuation">\</span>
+    <span class="token parameter variable">--platform</span> linux/amd64,linux/arm64 <span class="token punctuation">\</span>
+    <span class="token parameter variable">--tag</span> chmi0427/myapp:latest <span class="token punctuation">\</span>
+    <span class="token parameter variable">--push</span> <span class="token builtin class-name">.</span>
+</code></pre></div><h3 id="_3-2-构建单平台镜像-离线部署"><a href="#_3-2-构建单平台镜像-离线部署" class="header-anchor">#</a> 3.2 构建单平台镜像（离线部署）</h3> <p>当需要在特定环境中离线部署时，可以构建单平台镜像并导出为 tar 文件。</p> <h4 id="arm64-架构镜像"><a href="#arm64-架构镜像" class="header-anchor">#</a> ARM64 架构镜像</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">docker</span> buildx build <span class="token punctuation">\</span>
+    <span class="token parameter variable">--platform</span> linux/arm64 <span class="token punctuation">\</span>
+    <span class="token parameter variable">--file</span> Dockerfile <span class="token punctuation">\</span>
+    <span class="token parameter variable">--tag</span> linux8-jdk8-libreoffice:arm64 <span class="token punctuation">\</span>
+    <span class="token parameter variable">--output</span> <span class="token assign-left variable">type</span><span class="token operator">=</span>docker,dest<span class="token operator">=</span>./linux8-jdk8-libreoffice-arm64.tar <span class="token punctuation">\</span>
+    <span class="token builtin class-name">.</span>
+</code></pre></div><h4 id="amd64-架构镜像"><a href="#amd64-架构镜像" class="header-anchor">#</a> AMD64 架构镜像</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">docker</span> buildx build <span class="token punctuation">\</span>
+    <span class="token parameter variable">--platform</span> linux/amd64 <span class="token punctuation">\</span>
+    <span class="token parameter variable">--file</span> Dockerfile <span class="token punctuation">\</span>
+    <span class="token parameter variable">--tag</span> linux8-jdk8-libreoffice:amd64 <span class="token punctuation">\</span>
+    <span class="token parameter variable">--output</span> <span class="token assign-left variable">type</span><span class="token operator">=</span>docker,dest<span class="token operator">=</span>./linux8-jdk8-libreoffice-amd64.tar <span class="token punctuation">\</span>
+    <span class="token builtin class-name">.</span>
+</code></pre></div><h3 id="_3-3-导入离线镜像"><a href="#_3-3-导入离线镜像" class="header-anchor">#</a> 3.3 导入离线镜像</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 导入 ARM64 镜像</span>
+<span class="token function">docker</span> load <span class="token parameter variable">-i</span> linux8-jdk8-libreoffice-arm64.tar
+
+<span class="token comment"># 导入 AMD64 镜像</span>
+<span class="token function">docker</span> load <span class="token parameter variable">-i</span> linux8-jdk8-libreoffice-amd64.tar
+</code></pre></div><h2 id="运行和测试"><a href="#运行和测试" class="header-anchor">#</a> 运行和测试</h2> <h3 id="_4-1-功能测试"><a href="#_4-1-功能测试" class="header-anchor">#</a> 4.1 功能测试</h3> <p>以下命令演示如何运行镜像并测试 LibreOffice 文档转换功能。</p> <h4 id="测试-arm64-镜像"><a href="#测试-arm64-镜像" class="header-anchor">#</a> 测试 ARM64 镜像</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token parameter variable">--rm</span> <span class="token punctuation">\</span>
+    <span class="token parameter variable">--platform</span> linux/arm64 <span class="token punctuation">\</span>
+    <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/:/workspace <span class="token punctuation">\</span>
+    linux8-jdk8-libreoffice:arm64 <span class="token punctuation">\</span>
+    <span class="token function">bash</span> <span class="token parameter variable">-c</span> <span class="token string">&quot;
+        # 转换 Word 文档为 PDF
+        libreoffice --headless --convert-to pdf --outdir /workspace /workspace/test.docx
+        
+        echo '=== 转换完成 ==='
+        echo '平台架构: '<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-m</span><span class="token variable">)</span></span>
+        echo 'Java 版本: '
+        java -version 2&gt;&amp;1 | head -1
+        echo 'LibreOffice 版本: '
+        libreoffice --version 2&gt;/dev/null || echo 'LibreOffice 检测失败'
+        echo '输出文件: '
+        ls -la /workspace/*.pdf 2&gt;/dev/null || echo '未找到 PDF 文件'
+    &quot;</span>
+</code></pre></div><h4 id="测试-amd64-镜像"><a href="#测试-amd64-镜像" class="header-anchor">#</a> 测试 AMD64 镜像</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token parameter variable">--rm</span> <span class="token punctuation">\</span>
+    <span class="token parameter variable">--platform</span> linux/amd64 <span class="token punctuation">\</span>
+    <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/:/workspace <span class="token punctuation">\</span>
+    linux8-jdk8-libreoffice:amd64 <span class="token punctuation">\</span>
+    <span class="token function">bash</span> <span class="token parameter variable">-c</span> <span class="token string">&quot;
+        # 转换 Word 文档为 PDF
+        libreoffice --headless --convert-to pdf --outdir /workspace /workspace/test.docx
+        
+        echo '=== 转换完成 ==='
+        echo '平台架构: '<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> <span class="token parameter variable">-m</span><span class="token variable">)</span></span>
+        echo 'Java 版本: '
+        java -version 2&gt;&amp;1 | head -1
+        echo 'LibreOffice 版本: '
+        libreoffice --version 2&gt;/dev/null || echo 'LibreOffice 检测失败'
+        echo '输出文件: '
+        ls -la /workspace/*.pdf 2&gt;/dev/null || echo '未找到 PDF 文件'
+    &quot;</span>
+</code></pre></div><h3 id="_4-2-交互式调试"><a href="#_4-2-交互式调试" class="header-anchor">#</a> 4.2 交互式调试</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 进入容器进行交互式调试</span>
+<span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token parameter variable">--rm</span> <span class="token punctuation">\</span>
+    <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/:/workspace <span class="token punctuation">\</span>
+    linux8-jdk8-libreoffice:arm64 <span class="token punctuation">\</span>
+    <span class="token function">bash</span>
+
+<span class="token comment"># 在容器内手动测试各项功能</span>
+<span class="token comment"># 检查字体安装</span>
+fc-list <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-i</span> noto
+<span class="token comment"># 检查 Java 环境</span>
+<span class="token builtin class-name">echo</span> <span class="token variable">$JAVA_HOME</span>
+<span class="token function">which</span> <span class="token function">java</span>
+<span class="token comment"># 测试 LibreOffice</span>
+libreoffice <span class="token parameter variable">--help</span>
+</code></pre></div><h2 id="故障排除"><a href="#故障排除" class="header-anchor">#</a> 故障排除</h2> <h3 id="_5-1-常见问题"><a href="#_5-1-常见问题" class="header-anchor">#</a> 5.1 常见问题</h3> <table><thead><tr><th>问题</th> <th>原因</th> <th>解决方案</th></tr></thead> <tbody><tr><td>构建失败：平台不支持</td> <td>Docker Buildx 未正确配置</td> <td>重新运行 <code>tonistiigi/binfmt</code> 和 <code>buildx create</code></td></tr> <tr><td>字体显示异常</td> <td>中文字体未安装</td> <td>检查 <code>google-noto-sans-cjk-ttc-fonts</code> 是否安装成功</td></tr> <tr><td>LibreOffice 转换失败</td> <td>无头模式配置问题</td> <td>确保使用 <code>--headless</code> 参数</td></tr> <tr><td>网络连接超时</td> <td>代理配置问题</td> <td>检查构建器的代理设置</td></tr></tbody></table> <h3 id="_5-2-调试命令"><a href="#_5-2-调试命令" class="header-anchor">#</a> 5.2 调试命令</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># 检查构建器状态</span>
+<span class="token function">docker</span> buildx <span class="token function">ls</span>
+
+<span class="token comment"># 查看详细构建日志</span>
+<span class="token function">docker</span> buildx build <span class="token parameter variable">--progress</span><span class="token operator">=</span>plain <span class="token punctuation">..</span>.
+
+<span class="token comment"># 检查镜像信息</span>
+<span class="token function">docker</span> buildx imagetools inspect chmi0427/myapp:latest
+
+<span class="token comment"># 查看镜像层信息</span>
+<span class="token function">docker</span> <span class="token function">history</span> linux8-jdk8-libreoffice:arm64
+</code></pre></div><h3 id="_5-3-性能优化建议"><a href="#_5-3-性能优化建议" class="header-anchor">#</a> 5.3 性能优化建议</h3> <ol><li><strong>缓存优化</strong>：将不经常变化的依赖安装放在前面的层</li> <li><strong>镜像大小</strong>：使用 <code>.dockerignore</code> 排除不必要的文件</li> <li><strong>并行构建</strong>：利用 Buildx 的并行构建能力</li> <li><strong>多阶段构建</strong>：对于复杂应用，考虑使用多阶段构建减少最终镜像大小</li></ol> <hr> <h2 id="相关资源"><a href="#相关资源" class="header-anchor">#</a> 相关资源</h2> <ul><li><a href="https://docs.docker.com/buildx/" target="_blank" rel="noopener noreferrer">Docker Buildx 官方文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://docs.docker.com/desktop/multi-arch/" target="_blank" rel="noopener noreferrer">多架构镜像构建指南<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://wiki.almalinux.org/documentation/" target="_blank" rel="noopener noreferrer">AlmaLinux 包管理器优化<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">9/30/2025, 8:43:22 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/doc/backEnd/linux/docker/image.html" class="prev">
+        镜像
+      </a></span> <span class="next"><a href="/doc/backEnd/linux/docker/container.html">
+        容器
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/doc/assets/js/app.e9791119.js" defer></script><script src="/doc/assets/js/2.9984ddc4.js" defer></script><script src="/doc/assets/js/1.4894c54a.js" defer></script><script src="/doc/assets/js/35.6f3c3b87.js" defer></script>
+  </body>
+</html>
